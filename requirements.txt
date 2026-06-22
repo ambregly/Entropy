@@ -1,0 +1,8 @@
+# Dependances pour upset_entropy.py
+# NB: upsetplot 0.9.0 est incompatible avec pandas >= 3.0 (colonnes de style
+# laissees a NaN par fillna(inplace=True) sous Copy-on-Write). On reste donc en
+# pandas 2.x. numpy 2.x est supporte car le script n'utilise pas show_counts.
+pandas>=2.0,<3.0
+numpy>=1.24
+matplotlib>=3.7
+upsetplot>=0.9.0
