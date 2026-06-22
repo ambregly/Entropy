@@ -1,11 +1,20 @@
-# UpSet plots des filtres d'entropie (kmers & contigs)
+# Comparaisons des filtres d'entropie (kmers & contigs)
 
-`upset_entropy.py` compare, entre les filtres d'entropie **k3, k5, k8 et k10**,
-les **identifiants uniques de fusion** presents dans les fichiers FASTA du
-dossier `complexity`, et produit deux UpSet plots :
+Deux scripts, qui comparent tous deux les **identifiants uniques de fusion**
+extraits des fichiers FASTA du dossier `complexity` :
 
-- un pour les kmers (`kmers-entropyk*.fa`),
-- un pour les contigs (`contigs-entropyk*.fa`).
+- `upset_entropy.py` : **UpSet plots** comparant les k entre eux (k3 vs k5 vs
+  k8 vs k10), un plot pour les kmers et un pour les contigs.
+- `venn_entropy.py` : **diagrammes de Venn** comparant, pour chaque k, les
+  kmers vs les contigs.
+
+## upset_entropy.py
+
+Compare, entre les filtres d'entropie **k3, k5, k8 et k10**, les identifiants
+uniques de fusion presents dans :
+
+- les kmers (`kmers-entropyk*.fa`),
+- les contigs (`contigs-entropyk*.fa`).
 
 ## Principe
 
@@ -45,6 +54,27 @@ python upset_entropy.py --input /chemin/vers/complexity --outdir /chemin/sortie
 | `upset_contigs.png` / `.pdf` | UpSet plot des fusions par k (contigs) |
 | `membership_kmers.csv` | tableau presence/absence (fusion x k) |
 | `membership_contigs.csv` | idem pour les contigs |
+
+## venn_entropy.py
+
+Pour **chaque k** (k3, k5, k8, k10), trace un diagramme de Venn comparant les
+identifiants de fusion presents dans les kmers vs dans les contigs.
+
+```bash
+# Par defaut : lit ~/complexity et ecrit dans ~/complexity/venn
+python venn_entropy.py
+
+# Ou en precisant les dossiers
+python venn_entropy.py --input /chemin/vers/complexity --outdir /chemin/sortie
+```
+
+Sorties (dans `--outdir`) :
+
+| Fichier | Contenu |
+|---|---|
+| `venn_k{3,5,8,10}.png` / `.pdf` | un Venn kmers vs contigs par k |
+| `venn_all.png` / `.pdf` | panneau recapitulatif (tous les k) |
+| `venn_counts.csv` | effectifs (kmers_seuls, intersection, contigs_seuls) par k |
 
 ## Note de compatibilite
 

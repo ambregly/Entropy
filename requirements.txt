@@ -6,3 +6,4 @@ pandas>=2.0,<3.0
 numpy>=1.24
 matplotlib>=3.7
 upsetplot>=0.9.0
+matplotlib-venn>=1.0    # requis par venn_entropy.py
