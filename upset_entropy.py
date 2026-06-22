@@ -63,12 +63,15 @@ def read_ids(path):
 
 
 def discover(input_dir, prefix):
-    """Associe chaque valeur de k a son fichier `{prefix}-entropyk*.fa`.
+    """Associe chaque valeur de k a son fichier `{prefix}*entropyk*.fa`.
+
+    Accepte les noms avec ou sans separateur entre le prefixe et "entropy"
+    (ex: `kmers-entropyk3.fa` comme `kmersentropyk3.fa`).
 
     Renvoie un dict {k: chemin} ordonne selon K_ORDER pour les k presents.
     """
     found = {}
-    for path in glob(os.path.join(input_dir, f"{prefix}-entropy*.fa")):
+    for path in glob(os.path.join(input_dir, f"{prefix}*entropy*.fa")):
         m = K_IN_FILENAME.search(os.path.basename(path))
         if m:
             found[int(m.group(1))] = path
@@ -136,7 +139,7 @@ def process(kind, prefix, input_dir, outdir):
     """Traite un type ('kmers' ou 'contigs') : fichiers -> membership -> UpSet."""
     files_by_k = discover(input_dir, prefix)
     if not files_by_k:
-        print(f"[{kind}] aucun fichier '{prefix}-entropyk*.fa' dans {input_dir} "
+        print(f"[{kind}] aucun fichier '{prefix}*entropyk*.fa' dans {input_dir} "
               f"- ignore.")
         return
     print(f"[{kind}] fichiers detectes :")
@@ -151,6 +154,12 @@ def process(kind, prefix, input_dir, outdir):
     csv_path = os.path.join(outdir, f"membership_{kind}.csv")
     df.astype(int).to_csv(csv_path)
     print(f"  -> {csv_path}")
+
+    # Un UpSet plot compare des ensembles entre eux : il faut au moins 2 k.
+    if len(df.columns) < 2:
+        print(f"[{kind}] un seul k present ({', '.join(df.columns)}) : pas d'UpSet "
+              f"plot (comparaison impossible avec un seul ensemble). CSV produit.")
+        return
 
     make_upset(df, f"UpSet des {kind} par filtre d'entropie (k)",
                os.path.join(outdir, f"upset_{kind}"))
