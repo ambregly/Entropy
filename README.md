@@ -76,6 +76,23 @@ Sorties (dans `--outdir`) :
 | `venn_all.png` / `.pdf` | panneau recapitulatif (tous les k) |
 | `venn_counts.csv` | effectifs (kmers_seuls, intersection, contigs_seuls) par k |
 
+## kmer_counts.py
+
+Construit un tableau du **nombre de kmers** associes a chaque identifiant unique
+de fusion, pour chaque filtre k3/k5/k8/k10.
+
+```bash
+# Par defaut : lit ~/complexity et ecrit kmer_counts.csv dans le meme dossier
+python kmer_counts.py
+
+# Ou en precisant les dossiers
+python kmer_counts.py --input /chemin/vers/complexity --outdir /chemin/sortie
+```
+
+Sortie : `kmer_counts.csv` avec une ligne par fusion et les colonnes
+`fusion_id, k3, k5, k8, k10` (nombre de kmers, 0 si la fusion est absente du
+filtre).
+
 ## Note de compatibilite
 
 `upsetplot 0.9.0` necessite `pandas < 3.0` (voir `requirements.txt`). Le script
