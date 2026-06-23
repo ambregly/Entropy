@@ -93,6 +93,23 @@ Sortie : `kmer_counts.csv` avec une ligne par fusion et les colonnes
 `fusion_id, k3, k5, k8, k10` (nombre de kmers, 0 si la fusion est absente du
 filtre).
 
+## upset_kmers_bykmer.py
+
+UpSet plot comparant les **kmers individuels** (et non les fusions) entre les
+filtres k3/k5/k8/k10. Chaque kmer est identifie par son en-tete complet
+`fusion.kmerN`.
+
+```bash
+python upset_kmers_bykmer.py --input /chemin/vers/complexity --outdir /chemin/sortie
+```
+
+Sorties (dans `--outdir`) :
+
+| Fichier | Contenu |
+|---|---|
+| `upset_kmers_bykmer.png` / `.pdf` | UpSet plot des kmers par k |
+| `membership_kmers_bykmer.csv` | tableau presence/absence (kmer x k) |
+
 ## Note de compatibilite
 
 `upsetplot 0.9.0` necessite `pandas < 3.0` (voir `requirements.txt`). Le script
